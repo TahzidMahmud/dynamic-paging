@@ -1,0 +1,28 @@
+/*your custom css goes here*/
+
+
+
+.aiz-topbar-item .btn-outline-secondary{
+    border-radius: 3rem!important;
+    border: 1px solid;
+}
+
+.input-outline{
+    border-color: var(--secondary);
+    color: var(--dark);
+    border-radius: 3rem!important;
+    border: 1px solid;
+}
+.nav-src{
+    max-width: 20rem!important;
+    min-width: 15rem!important;
+}
+.text-violate {
+    color: #612E8E !important;
+}
+.thead-violate{
+    box-sizing: border-box;
+    background-color: #D52B1E !important;
+    color: #fff !important;
+    border-radius: 1rem!important;
+}
