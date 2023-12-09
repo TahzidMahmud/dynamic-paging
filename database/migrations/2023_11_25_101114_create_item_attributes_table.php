@@ -13,8 +13,12 @@ class CreateItemAttributesTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_attributes', function (Blueprint $table) {
+        Schema::create('page_item_attributes', function (Blueprint $table) {
             $table->id();
+            $table->string('type');
+            $table->string('name');
+            $table->text('value');
+            $table->bigInteger('parent_id');
             $table->timestamps();
         });
     }

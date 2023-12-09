@@ -9,6 +9,7 @@ use App\Http\Controllers\Payment\StripePaymentController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SitePageController;
 use App\Http\Controllers\BlogController;
 
 use App\Http\Controllers\Payment\RazorpayPaymentController;
@@ -66,9 +67,11 @@ Route::get('/product/{slug}', [HomeController::class,'index'])->name('product');
 Route::get('/category/{slug}', [HomeController::class,'index'])->name('products.cat egory');
 
 
-Route::group([ 'middleware' => ['auth']], function () {
-    Route::get('/', [HomeController::class,'index'])->name('home');
-});
+// Route::group([ 'middleware' => ['auth']], function () {
+//     Route::get('/', [HomeController::class,'index'])->name('home');
+// });
+    Route::get('/', [SitePageController::class,'index']);
+
 
 Route::get('{slug}', [HomeController::class,'index'])->where('slug','.*');
 //Blog Section

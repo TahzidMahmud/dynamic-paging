@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SitePage;
+use App\Models\PageAttributeValues;
 use Illuminate\Http\Request;
-use App\Models\Section;
-use App\Models\PageItem;
-use App\Models\PageItemAttribute;
-class SitePageController extends Controller
+
+class PageAttributeValuesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,14 +14,7 @@ class SitePageController extends Controller
      */
     public function index()
     {
-        $items=PageItem::with('attributes')->get();
-        // $attributes=PageItemAttribute::all();
-
-        // foreach($items as $item){
-        //     $item->attributes()->attach($attributes[0]);
-        //     $item->attributes()->attach($attributes[1]);
-        // }
-       return view('backend.pages.index',compact('items'));
+        //
     }
 
     /**
@@ -33,7 +24,7 @@ class SitePageController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -50,10 +41,10 @@ class SitePageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SitePage  $sitePage
+     * @param  \App\Models\PageAttributeValues  $pageAttributeValues
      * @return \Illuminate\Http\Response
      */
-    public function show(SitePage $sitePage)
+    public function show(PageAttributeValues $pageAttributeValues)
     {
         //
     }
@@ -61,10 +52,10 @@ class SitePageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SitePage  $sitePage
+     * @param  \App\Models\PageAttributeValues  $pageAttributeValues
      * @return \Illuminate\Http\Response
      */
-    public function edit(SitePage $sitePage)
+    public function edit(PageAttributeValues $pageAttributeValues)
     {
         //
     }
@@ -73,10 +64,10 @@ class SitePageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SitePage  $sitePage
+     * @param  \App\Models\PageAttributeValues  $pageAttributeValues
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SitePage $sitePage)
+    public function update(Request $request, PageAttributeValues $pageAttributeValues)
     {
         //
     }
@@ -84,10 +75,10 @@ class SitePageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SitePage  $sitePage
+     * @param  \App\Models\PageAttributeValues  $pageAttributeValues
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SitePage $sitePage)
+    public function destroy(PageAttributeValues $pageAttributeValues)
     {
         //
     }

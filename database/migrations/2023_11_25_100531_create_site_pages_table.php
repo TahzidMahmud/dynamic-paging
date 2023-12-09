@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateItemsTable extends Migration
+class CreateSitePagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('page_items', function (Blueprint $table) {
+        Schema::create('site_pages', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->string('name');
             $table->string('type');
             $table->timestamps();
@@ -28,6 +29,6 @@ class CreateItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('site_pages');
     }
 }

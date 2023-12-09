@@ -17,13 +17,13 @@
     <!-- aiz core css -->
     <link rel="stylesheet" href="{{ static_asset('assets/css/vendors.css') }}">
     <link rel="stylesheet" href="{{ static_asset('assets/css/bfx-core.css') }}">
-
+    <script src="{{ static_asset('js/app.js') }}" defer></script>
     <script>
         var AIZ = AIZ || {};
     </script>
 </head>
 <body>
-    <div class="aiz-main-wrapper d-flex">
+    <div  class="aiz-main-wrapper d-flex">
 
         <div class="flex-grow-1">
             @yield('content')
