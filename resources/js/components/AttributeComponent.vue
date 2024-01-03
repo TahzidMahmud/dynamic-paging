@@ -6,6 +6,9 @@
         <div v-else-if="attribute.value=='title'">
             <TitleComponent :attr_key="attribute.value" @handleChange="handleChange"></TitleComponent>
         </div>
+        <div v-else-if="attribute.value=='sub_title'">
+            <SubTitleComponent :attr_key="attribute.value" @handleChange="handleChange"></SubTitleComponent>
+        </div>
         <div v-else>Error loading Component.</div>
    </div>
 </template>
@@ -21,7 +24,7 @@ export default {
     },
     data:()=>{
         return {
-          values:[]
+          values:{}
         };
     },
     created(){
@@ -29,7 +32,10 @@ export default {
     },
     methods:{
         handleChange(data){
-            this.values=[...this.values,data];
+           let key= data.attr_key;
+           let val=data.value;
+           this.values={...this.values,[key]:val};
+           this.$emit('handleChange',{[key]:val});
         }
     }
 

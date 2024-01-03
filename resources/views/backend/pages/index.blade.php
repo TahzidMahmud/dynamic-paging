@@ -1,7 +1,7 @@
 @extends('backend.layouts.blank')
 <div id="app">
     {{-- {{ dd($items) }} --}}
-    <page-setting :items="{{ $items }}"></page-setting>
+    <page-setting-component :items="{{ $items }}"></page-setting-component>
 </div>
 
 @section('content')

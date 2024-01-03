@@ -1,8 +1,8 @@
 <template>
     <div class="row">
         <div class="col-12">
-            <label>Enter Article Title</label>
-            <input class="form-control" v-model="title" value="" @change="handleChange" placeholder="Please Enter Article Title Here..."/>
+            <label>Enter Article Sub-Title</label>
+            <input class="form-control" v-model="sub_title" value="" @change="handleChange" placeholder="Please Enter Article sub-Title Here..."/>
         </div>
     </div>
 </template>
@@ -16,12 +16,12 @@ export default {
     },
     data:()=>{
         return {
-            title:'',
+            sub_title:'',
         }
     },
     methods:{
         handleChange(){
-            this.$emit('handleChange',{"attr_key":this.attr_key,value:this.title});
+            this.$emit('handleChange',{"attr_key":this.attr_key,value:this.sub_title});
         }
     }
 }

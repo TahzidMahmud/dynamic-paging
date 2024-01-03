@@ -42,7 +42,7 @@ export default {
     },
     methods:{
         handleChange(){
-            this.$emit('handleChange',{name:this.attr_key,value:this.list});
+            this.$emit('handleChange',{"attr_key":this.attr_key,value:this.list});
         },
         removeFromList(ind){
             this.list=this.list.filter((item,index)=>{

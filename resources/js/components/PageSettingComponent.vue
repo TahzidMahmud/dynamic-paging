@@ -7,10 +7,9 @@
                        <div v-if="selectedItems==null"> <button class="btn btn-primary" @click="openModal">Add New Section</button></div>
                        <div v-else><h6 class="text text-warning">Sections Can Be added One at a Time</h6></div>
                     </div>
-
                     <div class="card-body">
                         <div v-for="(section , index) in sections" :key="index" class="row d-flex flex-column">
-                            <div class="col-12">
+                            <div class="col-12" v-if="selectedItems==null">
                                 <h6>{{ section }} Order: <input class="control" type="number" min="0" :value="index+1"/></h6>
                                 <button class="btn btn-primary" @click="openItemModal">Add Item</button>
                             </div>
@@ -20,15 +19,28 @@
                                     <h6>Selected Item Is:  {{ selectedItems.text }} </h6>
                                     <hr>
                                     <div class="col-12" v-for="(attr,index) in selected_attr_arr" :key="index">
-                                        <h6>Item Will Have {{ attr.label }} In Order: <input class="control" type="number" min="0" :value="index+1"/></h6>
-                                        <AttributeComponent :attribute="attr"></AttributeComponent>
+                                        <h6>Item Will Have {{ attr.label }} In Order: <input class="control" type="number" min="0" :value="attr.order"  @input="handleOrderChange($event,selected_attr_arr,index)"/></h6>
+                                        <AttributeComponent :attribute="attr" @handleChange="handleChange"></AttributeComponent>
                                         <div class="m-2"></div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-12" v-if="selectedItems!=null && selected_attr_arr.length>0">
+                                <button class="btn btn-success" @click="saveItem">Save Item</button>
+                            </div>
+                        </div>
+                        <div class="border" v-if="section_data.items.length>0">
+                            <h5>Items in This Section:</h5>
+                            <br/>
+                            <div v-for="(item,index) in section_data.items" :key="index">
+                                <div v-if="item.type=='article'">
+                                    <ArticleComponent :values="item.value"></ArticleComponent>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <div ref="addSectionModal" class="modal fade" role="dialog">
@@ -108,12 +120,11 @@
 <script>
 import VueSelectPicker from "vue-select-picker-bootstrap";
 import Multiselect from 'vue-multiselect';
-// import AttributeComponent from "./AttributeComponent.vue";
+
 export default {
     components: {
         VueSelectPicker,
         Multiselect,
-        // AttributeComponent
     },
     props:{
         items:{
@@ -126,35 +137,55 @@ export default {
            items_arr:[],
            attr_arr:[],
            selected_attr_arr:[],
+           selected_attr_arr_values:{},
            selectedItems:null,
            section:'',
-           srcable:true
+           srcable:true,
+           section_data:{
+                "name":"",
+                "items":[],
+           },
         };
     },
     created(){
-        this.items.forEach((el)=>{
-            this.items_arr.push({value:el.type,text:el.name});
-        })
+        this.genereateItemDropDown();
 
     },
     watch:{
         selectedItems:function(prev){
-           this.items_arr=[...this.items.filter((item)=>{
-            if(item.type==prev.value){
-                return item;
+            if(prev){
+                this.items_arr=[...this.items?.filter((item)=>{
+                    if(item.type==prev.value){
+                        return item;
+                    }
+                })];
+                if(this.items_arr.length>0){
+                        this.attr_arr=[...this.items_arr[0].attributes.map((attr,index)=>{
+                            return ({value:attr.name,label:attr.value,order:index+1});
+                        })];
+                }
             }
-           })];
 
-           this.attr_arr=[...this.items_arr[0].attributes.map((attr)=>{
-            return ({value:attr.name,label:attr.value});
-           })];
+
         },
+        selected_attr_arr:function(prev){
+            // console.log(prev);
+        }
 
     },
     computed:{
 
     },
     methods:{
+        genereateItemDropDown(){
+            this.items.forEach((el,index)=>{
+                this.items_arr.push({value:el.type,text:el.name});
+            })
+        },
+        handleOrderChange(event,arr,index){
+            let obj=arr[index];
+            obj.order=parseInt(event.target.value);
+        },
         openItemModal(){
             let el =this.$refs.addItemModal;
             window.$(el).modal('show');
@@ -165,12 +196,38 @@ export default {
         },
         addNewsection(){
             this.sections=[...this.sections,this.section];
-            this.section='';
             let el =this.$refs.addSectionModal;
             window.$(el).modal('hide');
         },
         addItem(){
-            console.log(this.selected_attr_arr)
+            // console.log(this.selected_attr_arr)
+        },
+        handleChange(data){
+            this.selected_attr_arr_values={...this.selected_attr_arr_values,...data}
+        },
+        saveItem(){
+            let attr_values=[];
+            this.selected_attr_arr.map((item)=>{
+                let temp={"key":item.value,"order":item.order,"value":null};
+                temp.value=this.selected_attr_arr_values[item.value];
+                attr_values=[...attr_values,temp];
+            });
+           this.section_data.name=this.section;
+           this.section_data.items=[
+                ...this.section_data.items,{
+                    "name":this.selectedItems.text,
+                    "type":this.selectedItems.value,
+                    "order":this.section_data.items.length+1,
+                    "value":attr_values
+                }
+           ]
+           this.cleanUpItemCreation();
+
+        },
+        cleanUpItemCreation(){
+           this.selectedItems=null;
+           this.selected_attr_arr=[];
+           this.genereateItemDropDown();
         }
 
     }
